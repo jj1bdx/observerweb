@@ -1,7 +1,7 @@
 .PHONY: _build
 
 BASE_DIR = $(shell pwd)
-REBAR    = $(BASE_DIR)/rebar3
+REBAR    = rebar3
 
 all: compile
 
