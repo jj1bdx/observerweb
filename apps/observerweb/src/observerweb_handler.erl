@@ -166,7 +166,7 @@ wrap_info2(alloc, [{Name, BS, CS}|Alloc], Data) ->
 
 wrap_info2(scheduler, [], Data) -> lists:reverse(Data);
 wrap_info2(scheduler, [{SchedulerId, ActiveTime, TotalTime}|Scheduler], Data) ->
-    wrap_info2(scheduler, Scheduler, [{[{<<"shcedulerid">>, SchedulerId},{<<"activetime">>, ActiveTime},{<<"totaltime">>, TotalTime}]} | Data]);
+    wrap_info2(scheduler, Scheduler, [{[{<<"schedulerid">>, SchedulerId},{<<"activetime">>, ActiveTime},{<<"totaltime">>, TotalTime}]} | Data]);
 
 wrap_info2(info, [], Data) -> lists:reverse(Data);
 wrap_info2(info, [{Name, Value}|Stat], Data) ->
