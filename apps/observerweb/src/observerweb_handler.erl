@@ -12,6 +12,7 @@
 -include("observerweb.hrl").
 
 %% API
+-export([init/2]).
 -export([init/3]).
 -export([handle/2]).
 -export([terminate/3]).
@@ -19,11 +20,14 @@
 init(_Transport, Req, []) ->
     {ok, Req, undefined}.
 
+init(Req, State) ->
+    handle(Req, State).
+
 handle(Req, State) ->
-    {Method, Req2} = cowboy_req:method(Req),
-    HasBody = cowboy_req:has_body(Req2),
-    {ok, Req3} = process(Method, HasBody, Req2),
-    {ok, Req3, State}.
+    Method = cowboy_req:method(Req),
+    HasBody = cowboy_req:has_body(Req),
+    Req2 = process(Method, HasBody, Req),
+    {ok, Req2, State}.
 
 terminate(_Reason, _Req, _State) ->
     ok.
@@ -31,29 +35,30 @@ terminate(_Reason, _Req, _State) ->
 process(<<"POST">>, false, Req) ->
     cowboy_req:reply(400, [], <<"Missing body.">>, Req);
 process(<<"POST">>, true, Req) ->
-    {ok, PostVals, Req2} = cowboy_req:body_qs(Req),
-    case proplists:get_value(<<"action">>, PostVals) of
+    {ok, PostVals, Req2} = cowboy_req:read_urlencoded_body(Req),
+    {_, Action} = lists:keyfind(<<"action">>, 1, PostVals),
+    case Action of
         <<"get_sys">> ->
             Body = do_process(get_sys, get_acc_node()),
             reply(200, Body, Req2);
         <<"get_perf">> ->
-            Type = proplists:get_value(<<"type">>, PostVals),
+            {_, Type} = lists:keyfind(<<"type">>, 1, PostVals),
             Body = do_process(get_perf, {get_acc_node(), binary_to_atom(Type, latin1)}),
             reply(200, Body, Req2);
         <<"get_malloc">> ->
             Body = do_process(get_malloc, get_acc_node()),
             reply(200, Body, Req2);
         <<"get_pro">> ->
-            Type = proplists:get_value(<<"type">>, PostVals),
+            {_, Type} = lists:keyfind(<<"type">>, 1, PostVals),
             Body = do_process(get_pro, Type),
             reply(200, Body, Req2);
         <<"change_node">> ->
-            Node = proplists:get_value(<<"node">>, PostVals),
+            {_, Node} = lists:keyfind(<<"node">>, 1, PostVals),
             Result = do_process(change_node, Node),
             reply(200, Result, Req2);
         <<"connect_node">> ->
-            Node = proplists:get_value(<<"node">>, PostVals),
-            Cookie = proplists:get_value(<<"cookie">>, PostVals),
+            {_, Node} = lists:keyfind(<<"node">>, 1, PostVals),
+            {_, Cookie} = lists:keyfind(<<"cookie">>, 1, PostVals),
             Result = case do_process(connect_node, {Node, Cookie}) of
                  pang -> <<"Connect failed">>;
                  pong -> <<"ok">>
@@ -63,7 +68,7 @@ process(<<"POST">>, true, Req) ->
             Body = jiffy:encode({[{<<"nodes">>, get_bare_nodes()}]}),
             reply(200, Body, Req2);
         <<"del_node">> ->
-            Node = proplists:get_value(<<"node">>, PostVals),
+            {_, Node} = lists:keyfind(<<"node">>, 1, PostVals),
             del_node(Node),
             Req2
     end;
@@ -72,7 +77,7 @@ process(_, _, Req) ->
     cowboy_req:reply(405, Req).
 
 reply(Code, Body, Req) ->
-    cowboy_req:reply(Code, [{<<"content-type">>, <<"text/plain; charset=utf-8">>}], Body, Req).
+    cowboy_req:reply(Code, #{<<"content-type">> => <<"text/plain; charset=utf-8">>}, Body, Req).
 
 do_process(get_sys, Node) ->
     {Info, Stat} = observerweb_sys:sys_info(Node),
