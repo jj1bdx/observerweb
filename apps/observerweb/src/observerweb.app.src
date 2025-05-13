@@ -9,7 +9,7 @@
         cowboy,
         xmerl,
         runtime_tools,
-        jiffy
+        jsone
     ]},
     {env, []},
     {modules, []},

@@ -32,6 +32,9 @@ handle(Req, State) ->
 terminate(_Reason, _Req, _State) ->
     ok.
 
+json_encode(Term) ->
+    iolist_to_binary(jsone:encode(Term)).
+
 process(<<"POST">>, false, Req) ->
     cowboy_req:reply(400, [], <<"Missing body.">>, Req);
 process(<<"POST">>, true, Req) ->
@@ -65,7 +68,7 @@ process(<<"POST">>, true, Req) ->
                end,
             reply(200, Result, Req2);
         <<"get_nodes">> ->
-            Body = jiffy:encode({[{<<"nodes">>, get_bare_nodes()}]}),
+            Body = json_encode({[{<<"nodes">>, get_bare_nodes()}]}),
             reply(200, Body, Req2);
         <<"del_node">> ->
             {_, Node} = lists:keyfind(<<"node">>, 1, PostVals),
@@ -83,7 +86,7 @@ do_process(get_sys, Node) ->
     {Info, Stat} = observerweb_sys:sys_info(Node),
     [{_SysName, SysValue},{_CPUName, CPUValue}] = Info,
     [{_MemName, MemValue},{_StatName, StatValue}] = Stat,
-    jiffy:encode({[{<<"system">>, wrap_info(info, SysValue)},
+    json_encode({[{<<"system">>, wrap_info(info, SysValue)},
         {<<"cpu">>, wrap_info(info, CPUValue)},
         {<<"memory">>, wrap_info(info,MemValue)},
         {<<"statistics">>, wrap_info(info, StatValue)}]});
@@ -93,20 +96,20 @@ do_process(get_perf, {Node, Type}) ->
     case Type of
         scheduler ->
             Data = wrap_info(scheduler, Data0),
-            jiffy:encode({[{<<"scheduler">>, Data}]});
+            json_encode({[{<<"scheduler">>, Data}]});
         _ ->
-            jiffy:encode({Data0})
+            json_encode({Data0})
     end;
 
 do_process(get_malloc, Node) ->
     Data = observerweb_alloc:memory_alloc_info(Node),
-    jiffy:encode({[{<<"allocator">>, wrap_info(alloc, Data)}]});
+    json_encode({[{<<"allocator">>, wrap_info(alloc, Data)}]});
 
 do_process(get_pro, Type) ->
     case Type of
         <<"all">> ->
             Data = observerweb_pro:update(),
-            jiffy:encode(Data);
+            json_encode(Data);
         _ ->
             io:format("Type: ~p~n", [Type])
     end;

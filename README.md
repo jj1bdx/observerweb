@@ -20,8 +20,9 @@ Observer Web is erlang observer web frontend, base code borrowed from observer g
 - [x] Upgrade Cowboy from 1 to 2
 - [x] Latest Bootstrap
 - [x] Latest jQuery
-- [ ] Memory Allocators chart fix
-- [ ] Remove Jiffy
+- [x] Memory Allocators chart fix
+- [x] Remove Jiffy (now using jsone)
+- [ ] Scheduler Utilization chart fix
 - [ ] Fix modal dialog of Connect Nodes
 - [ ] Remove highcharts.com dependency
 
