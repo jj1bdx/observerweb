@@ -8,8 +8,13 @@ function loadCharts(){
     var schedulerChart, memoryChart, ioChart;
 
     Highcharts.setOptions({
-        global: {
-            useUTC: false
+        time: {
+            useUTC: true
+        },
+        lang: {
+            // 24-hour time display
+            // See dateFormat documentation
+            locale: 'en-GB'
         },
         colors: ['#CC0000', '#00FF00', '#0000FF', '#FF9655', '#24CBE5', '#AA66CC', '#99CC00', '#669900']
     });
