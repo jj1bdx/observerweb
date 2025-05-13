@@ -8,6 +8,10 @@ function loadCharts(){
     var schedulerChart, memoryChart, ioChart;
 
     Highcharts.setOptions({
+        colors: ['#CC0000', '#00FF00', '#0000FF', '#FF9655', '#24CBE5', '#AA66CC', '#99CC00', '#669900']
+    });
+    
+    schedulerChart = new Highcharts.Chart({
         time: {
             useUTC: true
         },
@@ -16,10 +20,6 @@ function loadCharts(){
             // See dateFormat documentation
             locale: 'en-GB'
         },
-        colors: ['#CC0000', '#00FF00', '#0000FF', '#FF9655', '#24CBE5', '#AA66CC', '#99CC00', '#669900']
-    });
-    
-    schedulerChart = new Highcharts.Chart({
         chart: {
             renderTo: 'scheduler-utilization',
             type: 'spline',
@@ -97,6 +97,14 @@ function loadCharts(){
         }())
     });
     memoryChart = new Highcharts.Chart({
+        time: {
+            useUTC: true
+        },
+        lang: {
+            // 24-hour time display
+            // See dateFormat documentation
+            locale: 'en-GB'
+        },
         chart: {
             renderTo: 'memory-usage',
             type: 'spline',
@@ -172,6 +180,14 @@ function loadCharts(){
         }())
     });
     ioChart = new Highcharts.Chart({
+        time: {
+            useUTC: true
+        },
+        lang: {
+            // 24-hour time display
+            // See dateFormat documentation
+            locale: 'en-GB'
+        },
         chart: {
             renderTo: 'io-usage',
             type: 'spline',
@@ -280,13 +296,18 @@ function loadMAlocInfo() {
     var sizeChart, utiliChart;
 
     Highcharts.setOptions({
-        global: {
-            useUTC: false
-        },
         colors: ['#7cb5ec', '#434348', '#90ed7d', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'] 
     });
 
     sizeChart = new Highcharts.Chart({
+        time: {
+            useUTC: true
+        },
+        lang: {
+            // 24-hour time display
+            // See dateFormat documentation
+            locale: 'en-GB'
+        },
         chart: {
             renderTo: 'carriers-size',
             type: 'spline',
@@ -360,6 +381,14 @@ function loadMAlocInfo() {
     });
 
     utiliChart = new Highcharts.Chart({
+        time: {
+            useUTC: true
+        },
+        lang: {
+            // 24-hour time display
+            // See dateFormat documentation
+            locale: 'en-GB'
+        },
         chart: {
             renderTo: 'carriers-utilization',
             type: 'spline',
