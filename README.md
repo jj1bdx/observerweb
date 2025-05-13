@@ -36,6 +36,7 @@ Observer Web is erlang observer web frontend, base code borrowed from observer g
 ```
 rebar3 get-deps
 rebar3 compile
+rebar3 release
 rebar3 shell
 ````
 
@@ -49,4 +50,4 @@ Open http://127.0.0.1:8080 in your browser
 
 ## License
 
-    The MIT License (MIT)
+Apache License 2.0
