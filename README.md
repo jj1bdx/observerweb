@@ -22,7 +22,6 @@ Observer Web is erlang observer web frontend, base code borrowed from observer g
 - [x] Latest jQuery
 - [x] Memory Allocators chart fix
 - [x] Remove Jiffy (now using jsone)
-- [ ] Scheduler Utilization chart fix
 - [ ] Fix modal dialog of Connect Nodes
 - [ ] Remove highcharts.com dependency
 
