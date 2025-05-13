@@ -558,7 +558,6 @@ function getNodes(){
             for(var i = 0; i < nodes.length; i++){
                     txt = txt + "<li><a class=\"dropdown-item\" href=\"#\">" + nodes[i] + "</a></li>";
             }
-            txt = txt + "<li><a class=\"dropdown-item\" href=\"#connect_node_modal\" data-toggle=\"modal\">Connect Node</a></li>";
             $('#nodes').html(txt);
         }
     });

@@ -77,6 +77,10 @@
               <a class="nav-link" href="#about" id="about-tab" role="tab" data-bs-toggle="tab" aria-controls="about"
                 aria-selected="true">About</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#connect-node-modal" id="connect-node-tab" role="tab" data-bs-toggle="modal"
+                data-bs-target="#connect_node_modal">Connect Nodes</a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">Nodes</a>
@@ -209,7 +213,7 @@
         <p>Trace Overview</p>
       </div>
       <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
-        <h3 class="pabel-title">About</h3>
+        <h3 class="panel-title">About</h3>
         <ul class="list-group">
           <li class="list-group-item">
             <a href="https:/github.com/jj1bdx/observerweb">GitHub link</a>
@@ -222,13 +226,12 @@
     </div>
   </div> <!-- /container -->
 
-  <div class="modal fade" id="connect_node_modal">
+  <div class="modal fade" id="connect_node_modal" tabindex="-1" aria-labelledby="connect_node_modal_label"
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-              class="sr-only">Close</span></button>
-          <h4 class="modal-title">Connect node</h4>
+          <h4 class="modal-title" id=connect_node_modal_label">Connect node</h4>
         </div>
         <div class="modal-body">
           <form role="form" id="connect_node_form">
@@ -243,7 +246,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary" onclick="connectNode()">OK</button>
         </div>
       </div><!-- /.modal-content -->
