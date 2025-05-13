@@ -1,10 +1,12 @@
-# Observer Web
+# ObserverWeb
 
 **This project is incomplete and is not for production use.** 
 
-Observer Web is erlang observer web frontend, base code borrowed from observer gui.
+ObserverWeb is Erlang observer web frontend.
 
-## Feature
+This repository contains code copied from Erlang/OTP.
+
+## Features
 
 ### Currently supported
 
@@ -17,13 +19,19 @@ Observer Web is erlang observer web frontend, base code borrowed from observer g
 
 ### Fixes
 
+#### Up to 0.2.0
+
 - [x] Upgrade Cowboy from 1 to 2
 - [x] Latest Bootstrap
 - [x] Latest jQuery
 - [x] Memory Allocators chart fix
 - [x] Remove Jiffy (now using jsone)
-- [ ] Fix modal dialog of Connect Nodes
+- [x] Fix modal dialog of Connect Nodes
+
+#### TODO to 0.3.0
+
 - [ ] Remove highcharts.com dependency
+- [ ] Test on distributed nodes
 
 ### New features
 
@@ -46,7 +54,7 @@ To start the release in the foreground:
 ./_build/default/rel/observerweb/bin/observerweb console
 ```
 
-Open http://127.0.0.1:8080 in your browser
+Open http://127.0.0.1:8080 in your browser.
 
 ## License
 
