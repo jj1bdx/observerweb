@@ -1,10 +1,13 @@
-Observer Web
-============
-**This project will no longer be maintained.** 
+# Observer Web
+
+**This project is incomplete and is not for production use.** 
+
 Observer Web is erlang observer web frontend, base code borrowed from observer gui.
 
 ## Feature
-Currently supported:
+
+### Currently supported
+
 * System
 * Load Charts
 * Memory Allocators
@@ -12,28 +15,37 @@ Currently supported:
 
 ## TODO
 
+### Fixes
+
+- [x] Upgrade Cowboy from 1 to 2
+- [x] Latest Bootstrap
+- [x] Latest jQuery
+- [ ] Memory Allocators chart fix
+- [ ] Remove Jiffy
+- [ ] Fix modal dialog of Connect Nodes
+- [ ] Remove highcharts.com dependency
+
+### New features
+
 - [ ] Applications
-- [x] Processes
 - [ ] Table viewer
 - [ ] Trace Overview 
 
 ## Usage
-Build and relese.
-```bash
-make rel
+
 ```
-To start the release in the foreground.
+rebar3 get-deps
+rebar3 compile
+rebar3 shell
+````
+
+To start the release in the foreground:
+
 ```bash
 ./_build/default/rel/observerweb/bin/observerweb console
 ```
+
 Open http://127.0.0.1:8080 in your browser
-
-
-## Screenshots
-![image](https://github.com/freecnpro/ObserverWeb/blob/master/screenshots/screenshot_01.png)
-![image](https://github.com/freecnpro/ObserverWeb/blob/master/screenshots/screenshot_02.png)
-![image](https://github.com/freecnpro/ObserverWeb/blob/master/screenshots/screenshot_03.png)
-![image](https://github.com/freecnpro/ObserverWeb/blob/master/screenshots/screenshot_04.png)
 
 ## License
 
