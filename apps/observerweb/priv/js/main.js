@@ -522,9 +522,9 @@ function getNodes(){
             var nodes = jsonData.nodes;
             var txt = "";
             for(var i = 0; i < nodes.length; i++){
-                    txt = txt + "<li role=\"presentation\" id=\"node_item\"><a role=\"menuitem\" href=\"#\">" + nodes[i] + "</a></li>";
+                    txt = txt + "<li><a class=\"dropdown-item\" href=\"#\">" + nodes[i] + "</a></li>";
             }
-            txt = txt + "<li role=\"presentation\"><a role=\"menuitem\" href=\"#connect_node_modal\" data-toggle=\"modal\">Connect Node</a></li>";
+            txt = txt + "<li><a class=\"dropdown-item\" href=\"#connect_node_modal\" data-toggle=\"modal\">Connect Node</a></li>";
             $('#nodes').html(txt);
         }
     });

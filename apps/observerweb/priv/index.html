@@ -14,8 +14,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.1/dist/bootstrap-table.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.1/dist/bootstrap-table.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.highcharts.com/12/highcharts.js"></script>
+  <!--
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.10/highcharts.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.10/js/themes/grid-light.js"></script>
+  -->
   <script src="js/main.js"></script>
   <script>
     $(document).ready(function () {
@@ -46,7 +49,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav" id="myTab" role="tablist">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="myTab" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" href="#system" id="system-tab" role="tab" data-bs-toggle="tab"
                 aria-controls="system" aria-selected="true">System</a>
@@ -75,15 +78,10 @@
               <a class="nav-link" href="#trace-overview" id="trace-overview-tab" role="tab" data-bs-toggle="tab"
                 aria-controls="trace-overview" aria-selected="true">Trace Overview</a>
             </li>
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nodes <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu" id="nodes">
-                <li role="presentation"><a role="menuitem" href="#connect_node_modal" data-toggle="modal">Connect
-                    Node</a></li>
-              </ul>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Nodes</a>
+              <ul class="dropdown-menu" id="nodes">
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->
