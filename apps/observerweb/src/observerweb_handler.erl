@@ -73,7 +73,10 @@ process(<<"POST">>, true, Req) ->
         <<"del_node">> ->
             {_, Node} = lists:keyfind(<<"node">>, 1, PostVals),
             del_node(Node),
-            Req2
+            Req2;
+        <<"get_app_vsn">> ->
+            Result = do_process(get_app_vsn, undefined),
+            reply(200, Result, Req2)
     end;
 process(_, _, Req) ->
     %% Method not allowed.
@@ -145,7 +148,10 @@ do_process(connect_node, {Value1, Value2}) ->
         end
     catch _:_ ->
         pang
-    end.
+    end;
+
+do_process(get_app_vsn, _) ->
+    json_encode({[{<<"app_vsn">>, list_to_binary(observerweb:vsn())}]}).
 
 add_node({Node, Cookie}) ->
     Nodes = get_nodes(),

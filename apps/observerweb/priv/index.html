@@ -17,6 +17,7 @@
   <script>
     $(document).ready(function () {
       getNodes();
+      loadAppVsnInfo();
       loadSysInfo();
       setTimeout(function () {
         loadCharts();
@@ -216,10 +217,17 @@
         <h3 class="panel-title">About</h3>
         <ul class="list-group">
           <li class="list-group-item">
-            <a href="https:/github.com/jj1bdx/observerweb">GitHub link</a>
+            <p>ObserverWeb: An experimental system viewer for Erlang/OTP</p>
+            <p id="app-version">
+          </li>
+          <li class="list-group-item">
+            <a href="https:/github.com/jj1bdx/observerweb">GitHub source code link</a>
           </li>
           <li class="list-group-item">
             <p>Program maintained by: Kenji Rikitake</p>
+          </li>
+          <li class="list-group-item">
+            <p>License: <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></p>
           </li>
         </ul>
       </div>

@@ -479,7 +479,7 @@ function displayInfo(id, data) {
         for (var i = 0; i < data.length; i++) {
             txt = txt + "<tr><td>" + data[i].name + "</td><td class=\"text-right\">" + data[i].bs + "</td><td class=\"text-right\">" + data[i].cs + "</td></tr>";
         }
-    }else {
+    } else {
         for (var i = 0; i < data.length; i++) {
             txt = txt + "<tr><td>" + data[i].name + "</td><td>" + data[i].value + "</td></tr>";
         }
@@ -595,3 +595,16 @@ function loadProInfos() {
         }
     });
 }
+
+function loadAppVsnInfo() {
+    var xmlhttp = new XMLHttpRequest();
+    sendAsyncRequest(xmlhttp, "action=get_app_vsn", function() {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            var jsonData = eval("(" + xmlhttp.responseText + ")");
+            var txt = "";
+            txt = txt + "<p> Application Vsn: " + jsonData.app_vsn + "</p>";
+            $('#app-version').html(txt);
+        }
+    });
+}
+

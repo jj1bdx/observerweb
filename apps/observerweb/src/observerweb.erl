@@ -11,7 +11,7 @@
 
 %% API
 -export([start/0, stop/0]).
--export([try_rpc/4, env/2]).
+-export([try_rpc/4, env/2, vsn/0]).
 
 -define(APP, ?MODULE).
 
@@ -33,3 +33,7 @@ try_rpc(Node, Mod, Func, Args) ->
   end.
 
 env(Key, Default) -> application:get_env(?APP, Key, Default).
+
+vsn() ->
+  {ok, Vsn} = application:get_key(?APP, vsn),
+  Vsn.
