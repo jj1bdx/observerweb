@@ -531,9 +531,13 @@ function getBetterValue(value, max){
 }
 
 function connectNode(){
-    $('#connect_node_modal').modal('toggle');
-    var nodename = $('#nodename').val();
-    var cookie = $('#cookie').val();
+    var connectModalEl = document.querySelector('#connect_node_modal');
+    var connectModal = bootstrap.Modal.getInstance(connectModalEl);
+    connectModal.toggle();
+    var nodename_selector = document.querySelector('#nodename');
+    var nodename = nodename_selector ? nodename_selector.value : "";
+    var cookie_selector = document.querySelector('#cookie');
+    var cookie = cookie_selector ? cookie_selector.value : "";
     var qs = "action=connect_node&node=" + nodename + "&cookie=" + cookie;
     document.getElementById("connect_node_form").reset();
     var xmlhttp = new XMLHttpRequest();
@@ -558,7 +562,7 @@ function getNodes(){
             for(var i = 0; i < nodes.length; i++){
                     txt = txt + "<li><a class=\"dropdown-item\" href=\"#\">" + nodes[i] + "</a></li>";
             }
-            $('#nodes').html(txt);
+            document.querySelector('#nodes').innerHTML = txt;
         }
     });
 }
