@@ -6,6 +6,10 @@ ObserverWeb is Erlang observer web frontend.
 
 This repository contains code copied from Erlang/OTP.
 
+## Current Release
+
+0.2.1
+
 ## Features
 
 ### Currently supported
@@ -28,10 +32,13 @@ This repository contains code copied from Erlang/OTP.
 - [x] Remove Jiffy (now using jsone)
 - [x] Fix modal dialog of Connect Nodes
 
+- [x] Remove jQuery
+
+#### Up to 0.2.1
+
 #### TODO to 0.3.0
 
-- [x] Remove jQuery
-- [ ] Remove highcharts.com dependency
+- [ ] Remove highcharts.com dependency (very hard)
 - [ ] Test on distributed nodes
 
 ### New features
