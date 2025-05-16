@@ -3,266 +3,55 @@
 */
 
 function loadCharts(){
-    
-    var schedulerobj, ioobj;
-    var schedulerChart, memoryChart, ioChart;
+    const schedulerUtilizationCtx = document.getElementById('scheduler-utilization');
+    const memoryUsageCtx = document.getElementById('memory-usage');
+    const ioUsageCtx = document.getElementById('io-usage');
 
-    Highcharts.setOptions({
-        colors: ['#CC0000', '#00FF00', '#0000FF', '#FF9655', '#24CBE5', '#AA66CC', '#99CC00', '#669900']
+    const schedulerChart = new Chart(schedulerUtilizationCtx, {
+        type: 'line',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'], // Labels for the chart
+            datasets: [{
+                label: 'Votes',
+                data: [12, 19, 3, 5, 2, 3]
+            }] 
+        },
+        options: {
+            plugins: {
+            title: {
+                display: true,
+                text: 'Scheduler Utilization [%]'
+            }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true // Start the y-axis at 0
+                }
+            }
+        }
     });
-    
-    schedulerChart = new Highcharts.Chart({
-        time: {
-            useUTC: true
-        },
-        lang: {
-            // 24-hour time display
-            // See dateFormat documentation
-            locale: 'en-GB'
-        },
-        chart: {
-            renderTo: 'scheduler-utilization',
-            type: 'spline',
-            animation: Highcharts.svg,
-            marginRight: 10,
-            events: {
-                load: function() {
-                    var xmlhttp = new XMLHttpRequest();
-                    setInterval(function() {
-                        sendAsyncRequest(xmlhttp, "action=get_perf&type=scheduler", function() {
-                            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                                var newData = eval("(" + xmlhttp.responseText + ")");
-                                console.log(newData);
-                                for (var i = 0; i < schedulerobj.scheduler.length; i++) {
-                                    var series = schedulerChart.series[i];
-                                    var x = (new Date()).getTime(),
-                                        activetime = newData.scheduler[i].activetime - schedulerobj.scheduler[i].activetime,
-                                        totaltime = newData.scheduler[i].totaltime - schedulerobj.scheduler[i].totaltime,
-                                        y = Math.floor((100 * activetime) / totaltime);
-                                    series.addPoint([x, y], true, true);
-                                }
-                                schedulerobj = newData;
-                            }
-                        });
-                    }, 1000);
-                }
-            }
-        },
-        title: {
-            text: 'Scheduler Utilization(%)',
-            align: 'left'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 100
-        },
-        yAxis: {
-            floor: 0,
-            ceiling: 100,
-            title: null
-        },
-        tooltip: {
-            enabled: false
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            }
-        },
-        series: (function() {
-            var seriesdata = [];
-            var responseText = sendSyncRequest("action=get_perf&type=scheduler");
-            schedulerobj = eval("(" + responseText + ")");
-            for (var i = 0; i < schedulerobj.scheduler.length; i++) {
-                seriesdata.push({
-                    name: i + 1,
-                    data: (function() {
-                        var data = [],
-                            time = (new Date()).getTime(),
-                            j;
+}
 
-                        for (j = -10; j <= 0; j += 1) {
-                            data.push({
-                                x: time + j * 1000,
-                                y: 0
-                            });
-                        }
-                        return data;
-                    }())
-                });
-            }
-            return seriesdata;
-        }())
-    });
-    memoryChart = new Highcharts.Chart({
-        time: {
-            useUTC: true
-        },
-        lang: {
-            // 24-hour time display
-            // See dateFormat documentation
-            locale: 'en-GB'
-        },
-        chart: {
-            renderTo: 'memory-usage',
-            type: 'spline',
-            animation: Highcharts.svg,
-            marginRight: 10,
-            events: {
-                load: function() {
-                    var xmlhttp = new XMLHttpRequest();
-                    setInterval(function() {
-                        sendAsyncRequest(xmlhttp, "action=get_perf&type=memory", function() {
-                            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                                var data = eval("(" + xmlhttp.responseText + ")");
-                                var x = (new Date()).getTime();
-                                var values = [data.total,data.processes,data.atom,data.binary,data.code,data.ets];
-                                var max = (values.sort(function(a, b){
-                                    return b - a;
-                                }))[0];
-                                memoryChart.setTitle({text: getTitle("Memory Usage", max)});
-                                for(var i = 0; i < values.length; i++){
-                                    memoryChart.series[i].addPoint([x, getBetterValue(values[i], max)], true, true);
-                                }
-                            }
-                        });
-                    }, 1000);
-                }
-            }
-
-        },
-        title: {
-            text: 'Memory Usage(KB)',
-            align: 'left'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 100
-        },
-        yAxis: {
-            floor: 0,
-            title: null
-        },
-        tooltip: {
-            enabled: false
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            }
-        },
-        series: (function() {
-            var seriesdata = [];
-            var names = ["Total", "Processes", "Atom", "Binary", "Code", "Ets"];
-            for (var i = 0; i < 6; i++) {
-                seriesdata.push({
-                    name: names[i],
-                    data: (function() {
-                        var data = [],
-                            time = (new Date()).getTime(),
-                            j;
-
-                        for (j = -10; j <= 0; j += 1) {
-                            data.push({
-                                x: time + j * 1000,
-                                y: 0
-                            });
-                        }
-                        return data;
-                    }())
-                });
-            }
-            return seriesdata;
-        }())
-    });
-    ioChart = new Highcharts.Chart({
-        time: {
-            useUTC: true
-        },
-        lang: {
-            // 24-hour time display
-            // See dateFormat documentation
-            locale: 'en-GB'
-        },
-        chart: {
-            renderTo: 'io-usage',
-            type: 'spline',
-            animation: Highcharts.svg,
-            marginRight: 10,
-            events: {
-                load: function() {
-                    var xmlhttp = new XMLHttpRequest();
-                    setInterval(function() {
-                        sendAsyncRequest(xmlhttp, "action=get_perf&type=io", function() {
-                            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                                var data = eval("(" + xmlhttp.responseText + ")");
-                                var x = (new Date()).getTime();
-                                var input = data.input - ioobj.input;
-                                var output = data.output - ioobj.output;
-                                var max = (input > output ? input : output);
-                                ioChart.setTitle({text: getTitle("IO Usage", max)});
-                                ioChart.series[0].addPoint([x, getBetterValue(input, max)], true, true);
-                                ioChart.series[1].addPoint([x, getBetterValue(output, max)], true, true);
-                                ioobj = data;
-                            }
-                        });
-                    }, 1000);
-                }
-            }
-
-        },
-        title: {
-            text: 'IO Usage(B)',
-            align: 'left'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 100
-        },
-        yAxis: {
-            floor: 0,
-            title: null
-        },
-        tooltip: {
-            enabled: false
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            }
-        },
-        series: (function() {
-            var seriesdata = [];
-            var responseText = sendSyncRequest("action=get_perf&type=io");
-            ioobj = eval("(" + responseText + ")");
-            var names = ["Input", "Output"];
-            for (var i = 0; i < 2; i++) {
-                seriesdata.push({
-                    name: names[i],
-                    data: (function() {
-                        var data = [],
-                            time = (new Date()).getTime(),
-                            j;
-
-                        for (j = -10; j <= 0; j += 1) {
-                            data.push({
-                                x: time + j * 1000,
-                                y: 0
-                            });
-                        }
-                        return data;
-                    }())
-                });
-            }
-            return seriesdata;
-        }())
-    });
+function loadSchedulerInfo() {
+    var schedulerObj;
+    var xmlhttp = new XMLHttpRequest();
+    setInterval(function() {
+      sendAsyncRequest(xmlhttp, "action=get_perf&type=scheduler", function() {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+          var newData = eval("(" + xmlhttp.responseText + ")");
+          console.log(newData, newData.scheduler.length);
+          //  for (var i = 0; i < schedulerObj.scheduler.length; i++) {
+          //    var series = schedulerChart.series[i];
+          //    var x = (new Date()).getTime(),
+          //        activetime = newData.scheduler[i].activetime - schedulerObj.scheduler[i].activetime,
+          //        totaltime = newData.scheduler[i].totaltime - schedulerObj.scheduler[i].totaltime,
+          //        y = Math.floor((100 * activetime) / totaltime);
+          //    series.addPoint([x, y], true, true);
+          //    }
+          // schedulerObj = newData;
+           }
+       });
+     }, 1000);
 }
 
 function loadSysInfo(){
@@ -292,174 +81,8 @@ function loadMAlocInfo() {
         loadMAlocInfos();
     }, 10*1000);
 
-    // Memory allocators charts
-    var sizeChart, utiliChart;
-
-    Highcharts.setOptions({
-        colors: ['#7cb5ec', '#434348', '#90ed7d', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'] 
-    });
-
-    sizeChart = new Highcharts.Chart({
-        time: {
-            useUTC: true
-        },
-        lang: {
-            // 24-hour time display
-            // See dateFormat documentation
-            locale: 'en-GB'
-        },
-        chart: {
-            renderTo: 'carriers-size',
-            type: 'spline',
-            animation: Highcharts.svg,
-            marginRight: 10,
-            events: {
-                load: function() {
-                    var xmlhttp = new XMLHttpRequest();
-                    setInterval(function() {
-                        sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
-                            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                                var data = eval("(" + xmlhttp.responseText + ")");
-                                var x = (new Date()).getTime();
-                                var allocators = data.allocator;
- 
-                                for(var i = 0; i < allocators.length; i++){
-                                    sizeChart.series[i].addPoint([x, allocators[i].cs / 1024], true, true);
-                                }
-                            }
-                        });
-                    }, 1000);
-                }
-            }
-        },
-        title: {
-            text: 'Carriers Size(MB)',
-            align: 'left'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 100
-        },
-        yAxis: {
-            floor: 0,
-            ceiling: 100,
-            title: null
-        },
-        tooltip: {
-            enabled: false
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            }
-        },
-        series: (function() {
-            var seriesdata = [];
-            var names = ["Total", "Temp", "Sl", "Std", "Ll", "Eheap", "Ets", "Fix", "Binary", "Driver"];
-            for (var i = 0; i < 10; i++) {
-                seriesdata.push({
-                    name: names[i],
-                    data: (function() {
-                        var data = [],
-                            time = (new Date()).getTime(),
-                            j;
-
-                        for (j = -10; j <= 0; j += 1) {
-                            data.push({
-                                x: time + j * 1000,
-                                y: 0
-                            });
-                        }
-                        return data;
-                    }())
-                });
-            }
-            return seriesdata;
-        }())
-    });
-
-    utiliChart = new Highcharts.Chart({
-        time: {
-            useUTC: true
-        },
-        lang: {
-            // 24-hour time display
-            // See dateFormat documentation
-            locale: 'en-GB'
-        },
-        chart: {
-            renderTo: 'carriers-utilization',
-            type: 'spline',
-            animation: Highcharts.svg,
-            marginRight: 10,
-            events: {
-                load: function() {
-                    var xmlhttp = new XMLHttpRequest();
-                    setInterval(function() {
-                        sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
-                            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                                var data = eval("(" + xmlhttp.responseText + ")");
-                                var x = (new Date()).getTime();
-                                var allocators = data.allocator;
- 
-                                for(var i = 0; i < allocators.length; i++){
-                                    utiliChart.series[i].addPoint([x, (allocators[i].bs / allocators[i].cs)*100], true, true);
-                                }
-                            }
-                        });
-                    }, 1000);
-                }
-            }
-        },
-        title: {
-            text: 'Carriers Utilization(%)',
-            align: 'left'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 100
-        },
-        yAxis: {
-            floor: 0,
-            ceiling: 100,
-            title: null
-        },
-        tooltip: {
-            enabled: false
-        },
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: false
-                }
-            }
-        },
-        series: (function() {
-            var seriesdata = [];
-            var names = ["Total", "Temp", "Sl", "Std", "Ll", "Eheap", "Ets", "Fix", "Binary", "Driver"];
-            for (var i = 0; i < 10; i++) {
-                seriesdata.push({
-                    name: names[i],
-                    data: (function() {
-                        var data = [],
-                            time = (new Date()).getTime(),
-                            j;
-
-                        for (j = -10; j <= 0; j += 1) {
-                            data.push({
-                                x: time + j * 1000,
-                                y: 0
-                            });
-                        }
-                        return data;
-                    }())
-                });
-            }
-            return seriesdata;
-        }())
-    });
+    const carriersSizeCtx = document.getElementById('carriers-size');
+    const carriersUtilizationCtx = document.getElementById('carriers-utilization');
 }
 
 function loadMAlocInfos() {
