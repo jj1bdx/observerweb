@@ -120,6 +120,8 @@ do_process(get_pro, Type) ->
 do_process(change_node, Value) ->
     Node = binary_to_atom(Value, latin1),
     case lists:keyfind(Node, 1, get_nodes()) of
+        {'nonode@nohost', _} ->
+            <<"Node not in distribution">>;
         {_, Cookie} ->
         io:format("Change Node: ~p~n", [Node]),
         erlang:set_cookie(node(), Cookie),
