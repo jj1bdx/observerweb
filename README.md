@@ -30,6 +30,7 @@ This repository contains code copied from Erlang/OTP.
 
 #### TODO to 0.3.0
 
+- [x] Remove jQuery
 - [ ] Remove highcharts.com dependency
 - [ ] Test on distributed nodes
 
