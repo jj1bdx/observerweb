@@ -12,6 +12,7 @@
     integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
     crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.5/dist/purify.min.js"></script>
   <script src="https://code.highcharts.com/12/highcharts.js"></script>
   <script src="js/main.js"></script>
   <script>
@@ -215,19 +216,21 @@
       </div>
       <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
         <h3 class="panel-title">About</h3>
-        <ul class="list-group">
+        <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            <p>ObserverWeb: An experimental system viewer for Erlang/OTP</p>
-            <p id="app-version">
+            ObserverWeb: An experimental system viewer for Erlang/OTP
+          </li>
+          <li class="list-group-item">
+            Application vsn: <span id="vsn"></span>
           </li>
           <li class="list-group-item">
             <a href="https:/github.com/jj1bdx/observerweb">GitHub source code link</a>
           </li>
           <li class="list-group-item">
-            <p>Program maintained by: Kenji Rikitake</p>
+            Program maintained by: Kenji Rikitake
           </li>
           <li class="list-group-item">
-            <p>License: <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></p>
+            License: <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a>
           </li>
         </ul>
       </div>
