@@ -121,6 +121,7 @@ do_process(change_node, Value) ->
     Node = binary_to_atom(Value, latin1),
     case lists:keyfind(Node, 1, get_nodes()) of
         {_, Cookie} ->
+        io:format("Change Node: ~p~n", [Node]),
         erlang:set_cookie(node(), Cookie),
         case net_adm:ping(Node) of
             pang ->
@@ -137,7 +138,7 @@ do_process(connect_node, {Value1, Value2}) ->
     try
         Node = binary_to_atom(Value1, latin1),
         Cookie = binary_to_atom(Value2, latin1),
-        io:format("Node: ~p~nCookie:~p~n", [Node, Cookie]),
+        io:format("Node: ~p~nCookie: ~p~n", [Node, Cookie]),
         erlang:set_cookie(node(), Cookie),
         case net_adm:ping(Node) of
             pang -> pang;

@@ -571,7 +571,7 @@ function changeNode(node){
     var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=change_node&node=" + node, function(){
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            console.log("Respone: ", xmlhttp.responseText);
+            console.log("Response: ", xmlhttp.responseText);
             if(xmlhttp.responseText === "true"){
                 location.reload();
             }
@@ -610,3 +610,26 @@ function loadAppVsnInfo() {
     });
 }
 
+function delegate(el, evt, sel, handler) {
+    el.addEventListener(evt, function(event) {
+        var t = event.target;
+        while (t && t !== this) {
+            if (t.matches(sel)) {
+                handler.call(t, event);
+            }
+            t = t.parentNode;
+        }
+    });
+}
+
+function setChangeNode() {
+    var ulnodes = document.querySelector('ul#nodes.dropdown-menu');
+    // console.log("ChangeNode ulnodes: ", ulnodes);
+    delegate(ulnodes, "click", "li a", function(){
+        var value = this.innerHTML;
+        // console.log("ChangeNode value: ", value);
+        if (value !== "Connect Node") {
+           changeNode(value);
+        }
+    });
+}
