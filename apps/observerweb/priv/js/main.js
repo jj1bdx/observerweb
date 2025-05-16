@@ -484,7 +484,7 @@ function displayInfo(id, data) {
             txt = txt + "<tr><td>" + data[i].name + "</td><td>" + data[i].value + "</td></tr>";
         }
     }
-    $(id).html(txt);
+    document.querySelector(id).innerHTML = txt;
 }
 
 function sendAsyncRequest(xmlhttp, qs, fun) {
@@ -591,7 +591,7 @@ function loadProInfos() {
             for (var i = jsonData.length -1; i >= 0 ; i--) {
                 txt = txt + "<tr><td>" + jsonData[i].pid + "</td><td>" + jsonData[i].name + "</td><td class=\"text-right\">" + jsonData[i].reds + "</td><td class=\"text-right\">"+ jsonData[i].mem + "</td><td class=\"text-right\">"+ jsonData[i].msg +"</td><td>"+ jsonData[i].fun +"</td></tr>";
             }
-            $('#process-table').html(txt);
+            document.querySelector('#process-table').innerHTML = txt;
         }
     });
 }
@@ -601,9 +601,7 @@ function loadAppVsnInfo() {
     sendAsyncRequest(xmlhttp, "action=get_app_vsn", function() {
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             var jsonData = eval("(" + xmlhttp.responseText + ")");
-            var txt = "";
-            txt = txt + "<p> Application Vsn: " + jsonData.app_vsn + "</p>";
-            $('#app-version').html(txt);
+            document.querySelector('#vsn').textContent = jsonData.app_vsn;
         }
     });
 }
