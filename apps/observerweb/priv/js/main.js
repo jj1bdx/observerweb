@@ -83,7 +83,7 @@ function loadCharts(){
                             time = (new Date()).getTime(),
                             j;
 
-                        for (j = -10; j <= 0; j += 1) {
+                        for (j = -60; j <= 0; j += 1) {
                             data.push({
                                 x: time + j * 1000,
                                 y: 0
@@ -166,7 +166,7 @@ function loadCharts(){
                             time = (new Date()).getTime(),
                             j;
 
-                        for (j = -10; j <= 0; j += 1) {
+                        for (j = -60; j <= 0; j += 1) {
                             data.push({
                                 x: time + j * 1000,
                                 y: 0
@@ -250,7 +250,7 @@ function loadCharts(){
                             time = (new Date()).getTime(),
                             j;
 
-                        for (j = -10; j <= 0; j += 1) {
+                        for (j = -60; j <= 0; j += 1) {
                             data.push({
                                 x: time + j * 1000,
                                 y: 0
@@ -366,7 +366,7 @@ function loadMAlocInfo() {
                             time = (new Date()).getTime(),
                             j;
 
-                        for (j = -10; j <= 0; j += 1) {
+                        for (j = -60; j <= 0; j += 1) {
                             data.push({
                                 x: time + j * 1000,
                                 y: 0
@@ -447,7 +447,7 @@ function loadMAlocInfo() {
                             time = (new Date()).getTime(),
                             j;
 
-                        for (j = -10; j <= 0; j += 1) {
+                        for (j = -60; j <= 0; j += 1) {
                             data.push({
                                 x: time + j * 1000,
                                 y: 0
