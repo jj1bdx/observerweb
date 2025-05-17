@@ -32,14 +32,15 @@ This repository contains code copied from Erlang/OTP.
 - [x] Remove Jiffy (now using jsone)
 - [x] Fix modal dialog of Connect Nodes
 
-- [x] Remove jQuery
-
 #### Up to 0.2.1
+
+- [x] Remove jQuery
 
 #### TODO to 0.3.0
 
-- [ ] Remove highcharts.com dependency (very hard)
+- [x] Use chart.js, remove highcharts.com dependency
 - [ ] Test on distributed nodes
+- [ ] Adjust screen layout
 
 ### New features
 
