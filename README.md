@@ -8,7 +8,7 @@ This repository contains code copied from Erlang/OTP.
 
 ## Current Release
 
-0.2.1
+0.3.0
 
 ## Features
 
@@ -36,10 +36,13 @@ This repository contains code copied from Erlang/OTP.
 
 - [x] Remove jQuery
 
-#### TODO to 0.3.0
+#### Up to 0.3.0
 
 - [x] Use chart.js, remove highcharts.com dependency
-- [ ] Test on distributed nodes
+- [x] Basic test on distributed nodes
+
+#### TODO
+
 - [ ] Adjust screen layout
 
 ### New features
