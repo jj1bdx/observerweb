@@ -267,8 +267,14 @@ function loadSysInfos() {
   });
 }
 
-// Memory allocator chart init
 function loadMAlocInfo() {
+
+  loadMAlocInfos();
+  setInterval(function(){
+      loadMAlocInfos();
+  }, 10*1000);
+   
+  // Carrier Size chart init
   const sizeChart = new Chart(document.getElementById("carriers-size"), {
     type: "line",
     data: function() {
@@ -343,7 +349,81 @@ function loadMAlocInfo() {
     });
   }, 1000);
 
-  const carriersUtilizationCtx = document.getElementById("carriers-utilization");
+  // Carrier Utilization chart init
+  const utiliChart = new Chart(document.getElementById("carriers-utilization"), {
+    type: "line",
+    data: function() {
+      const size = 60;
+      var labels = [],
+        time = new Date().getTime(),
+        j;
+      for (j = -size; j <= 0; j += 1) {
+        labels.push(time + j * 1000);
+      }
+      var seriesdata = [];
+      var names = ["Total", "Temp", "Sl", "Std", "Ll", "Eheap", "Ets", "Fix", "Literal", "Binary", "Driver"];
+      for (var i = 0; i < names.length; i++) {
+        seriesdata.push({
+          label: names[i],
+          data: function() {
+            var data = [],
+              j;
+            for (j = -size; j <= 0; j += 1) {
+              data.push(0);
+            }
+            return data;
+          }()
+        });
+      }
+      return {
+        labels: labels,
+        datasets: seriesdata
+      };
+    }(),
+    options: {
+      locale: "en-GB",
+      plugins: {
+        title: {
+          display: true,
+          text: "Carrier Utilization [%]"
+        },
+        tooltip: false
+      },
+      scales: {
+        x: {
+          type: "time"
+        },
+        y: {
+          beginAtZero: true,
+          min: 0,
+          max: 100
+        }
+      }
+    }
+  });
+  utiliChart.update("none");
+
+  // Memory chart periodic update
+  var xmlhttp = new XMLHttpRequest();
+  setInterval(function() {
+    sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        var newData = eval("(" + xmlhttp.responseText + ")");
+        var labels = utiliChart.data.labels;
+        var x = new Date().getTime();
+        labels.push(x);
+        labels.shift();
+        var allocators = newData.allocator;
+        for (var i = 0; i < allocators.length; i++) {
+          var series = utiliChart.data.datasets[i].data;
+          var y = (allocators[i].bs / allocators[i].cs) * 100;
+          series.push(y);
+          series.shift();
+        }
+        utiliChart.update("none");
+      }
+    });
+  }, 1000);
 }
 
 function loadMAlocInfos() {
