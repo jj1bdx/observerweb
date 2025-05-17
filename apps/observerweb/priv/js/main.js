@@ -133,7 +133,7 @@ function loadCharts() {
       plugins: {
         title: {
           display: true,
-          text: "Memory Usage [KB]"
+          text: "Memory Usage [MB]"
         },
         tooltip: false
       },
@@ -176,8 +176,7 @@ function loadCharts() {
         })[0];
         for (var i = 0; i < values.length; i++) {
           var series = memoryChart.data.datasets[i].data;
-          var y = getBetterValue(values[i], max);
-          series.push(y);
+          series.push(values[i] / 1048576);
           series.shift();
         }
         memoryChart.update("none");
@@ -224,7 +223,7 @@ function loadCharts() {
       plugins: {
         title: {
           display: true,
-          text: "IO Usage [B]"
+          text: "IO Usage [KB]"
         },
         tooltip: false
       },
@@ -266,9 +265,9 @@ function loadCharts() {
         var max = input > output ? input : output;
         var inputSeries = ioChart.data.datasets[0].data;
         var outputSeries = ioChart.data.datasets[1].data;
-        inputSeries.push(getBetterValue(input, max));
+        inputSeries.push(input / 1024);
         inputSeries.shift();
-        outputSeries.push(getBetterValue(output, max));
+        outputSeries.push(output / 1024);
         outputSeries.shift();
         ioobj = newData;
         ioChart.update("none");
@@ -514,21 +513,6 @@ function getTitle(title, max) {
     return title + "(KB)";
   } else {
     return title + "(B)";
-  }
-}
-
-function getBetterValue(value, max) {
-  kb = Math.floor(max / 1024);
-  mb = Math.floor(kb / 1024);
-  gb = Math.floor(mb / 1024);
-  if (gb > 10) {
-    return Math.floor(value / (1024 * 1024 * 1024));
-  } else if (mb > 10) {
-    return Math.floor(value / (1024 * 1024));
-  } else if (kb > 0) {
-    return Math.floor(value / 1024);
-  } else {
-    return value;
   }
 }
 
