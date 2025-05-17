@@ -42,6 +42,11 @@ function loadCharts() {
       locale: "en-GB",
       plugins: {
         title: {
+          align: "start",
+          font: {
+            weight: "bold",
+            size: 16
+          },
           display: true,
           text: "Scheduler Utilization [%]"
         },
@@ -132,6 +137,11 @@ function loadCharts() {
       locale: "en-GB",
       plugins: {
         title: {
+          align: "start",
+          font: {
+            weight: "bold",
+            size: 16
+          },
           display: true,
           text: "Memory Usage [MB]"
         },
@@ -222,6 +232,11 @@ function loadCharts() {
       locale: "en-GB",
       plugins: {
         title: {
+          align: "start",
+          font: {
+            weight: "bold",
+            size: 16
+          },
           display: true,
           text: "IO Usage [KB]"
         },
@@ -342,6 +357,11 @@ function loadMAlocInfo() {
       locale: "en-GB",
       plugins: {
         title: {
+          align: "start",
+          font: {
+            weight: "bold",
+            size: 16
+          },
           display: true,
           text: "Carrier Size [MB]"
         },
@@ -406,6 +426,11 @@ function loadMAlocInfo() {
       locale: "en-GB",
       plugins: {
         title: {
+          align: "start",
+          font: {
+            weight: "bold",
+            size: 16
+          },
           display: true,
           text: "Carrier Utilization [%]"
         },
