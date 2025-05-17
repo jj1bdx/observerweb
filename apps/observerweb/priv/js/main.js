@@ -3,7 +3,6 @@
 */
 
 function loadCharts(){
-    const memoryUsageCtx = document.getElementById('memory-usage');
     const ioUsageCtx = document.getElementById('io-usage');
     var schedulerobj, ioobj;
 
@@ -82,6 +81,83 @@ function loadCharts(){
             }
           schedulerobj = newData;
           schedulerChart.update('none');
+        }
+       });
+     }, 1000);
+
+    const memoryChart = new Chart(
+        document.getElementById('memory-usage'),
+        {
+        type: 'line',
+        data:  (function() {
+                const size = 60;
+                var labels = [],
+                    time = (new Date()).getTime(),
+                    j; 
+                for (j = -size; j <= 0; j += 1) {
+                    labels.push(time + j * 1000);
+                }
+                var seriesdata = [];
+                var names = ["Total", "Processes", "Atom", "Binary", "Code", "Ets"];
+                for (var i = 0; i < names.length; i++) {
+                    seriesdata.push({
+                        label: names[i],
+                        data: (function() {
+                            var data = [],
+                                j;
+                            for (j = -size; j <= 0; j += 1) {
+                                data.push(0);
+                            }
+                            return data;
+                        }())
+                    });
+                }
+                return ({
+                    labels: labels,
+                    datasets: seriesdata
+                    });
+            }()),
+        options: {
+            locale: 'en-GB',
+            plugins: {
+            title: {
+                display: true,
+                text: 'Memory Usage [KB]'
+            }
+            },
+            scales: {
+                x: {
+                    type: 'time'
+                },
+                y: {
+                    beginAtZero: true,
+                    min: 0,
+                }
+            }
+        }
+    });
+    memoryChart.update('none');
+
+    var xmlhttp = new XMLHttpRequest();
+    setInterval(function() {
+      sendAsyncRequest(xmlhttp, "action=get_perf&type=memory", function() {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+          var newData = eval("(" + xmlhttp.responseText + ")");
+          var labels = memoryChart.data.labels;
+          var x = (new Date()).getTime();
+          labels.push(x);
+          labels.shift();
+          var values = [newData.total,newData.processes,newData.atom,newData.binary,newData.code,newData.ets];
+          var max = (values.sort(function(a, b){
+              return b - a;
+          }))[0];
+          for(var i = 0; i < values.length; i++){
+            var series = memoryChart.data.datasets[i].data;
+            var y = getBetterValue(values[i], max);
+            series.push(y);
+            series.shift();
+            }
+          memoryChart.update('none');
         }
        });
      }, 1000);
