@@ -543,6 +543,7 @@ function connectNode() {
         alert("Connect failed!");
       } else {
         location.reload();
+        alert("Connect to Node " + nodename);
       }
     }
   });
