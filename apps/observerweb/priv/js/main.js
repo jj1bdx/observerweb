@@ -38,7 +38,7 @@ function loadCharts() {
       };
     }(),
     options: {
-      animation:false,
+      animation: false,
       locale: "en-GB",
       plugins: {
         title: {
@@ -128,7 +128,7 @@ function loadCharts() {
       };
     }(),
     options: {
-      animation:false,
+      animation: false,
       locale: "en-GB",
       plugins: {
         title: {
@@ -219,7 +219,7 @@ function loadCharts() {
       };
     }(),
     options: {
-      animation:false,
+      animation: false,
       locale: "en-GB",
       plugins: {
         title: {
@@ -339,7 +339,7 @@ function loadMAlocInfo() {
       };
     }(),
     options: {
-      animation:false,
+      animation: false,
       locale: "en-GB",
       plugins: {
         title: {
@@ -403,7 +403,7 @@ function loadMAlocInfo() {
       };
     }(),
     options: {
-      animation:false,
+      animation: false,
       locale: "en-GB",
       plugins: {
         title: {
