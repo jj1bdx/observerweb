@@ -244,6 +244,7 @@ function loadCharts() {
   }, 1000);
 }
 
+// System Info table init
 function loadSysInfo() {
   loadSysInfos();
   setInterval(function() {
@@ -251,6 +252,7 @@ function loadSysInfo() {
   }, 10 * 1000);
 }
 
+// System Info table periodic update 
 function loadSysInfos() {
   var xmlhttp = new XMLHttpRequest();
   sendAsyncRequest(xmlhttp, "action=get_sys", function() {
@@ -265,8 +267,82 @@ function loadSysInfos() {
   });
 }
 
+// Memory allocator chart init
 function loadMAlocInfo() {
-  const carriersSizeCtx = document.getElementById("carriers-size");
+  const sizeChart = new Chart(document.getElementById("carriers-size"), {
+    type: "line",
+    data: function() {
+      const size = 60;
+      var labels = [],
+        time = new Date().getTime(),
+        j;
+      for (j = -size; j <= 0; j += 1) {
+        labels.push(time + j * 1000);
+      }
+      var seriesdata = [];
+      var names = ["Total", "Temp", "Sl", "Std", "Ll", "Eheap", "Ets", "Fix", "Literal", "Binary", "Driver"];
+      for (var i = 0; i < names.length; i++) {
+        seriesdata.push({
+          label: names[i],
+          data: function() {
+            var data = [],
+              j;
+            for (j = -size; j <= 0; j += 1) {
+              data.push(0);
+            }
+            return data;
+          }()
+        });
+      }
+      return {
+        labels: labels,
+        datasets: seriesdata
+      };
+    }(),
+    options: {
+      locale: "en-GB",
+      plugins: {
+        title: {
+          display: true,
+          text: "Carrier Size [MB]"
+        },
+        tooltip: false
+      },
+      scales: {
+        x: {
+          type: "time"
+        },
+        y: {
+          beginAtZero: true,
+          min: 0
+        }
+      }
+    }
+  });
+  sizeChart.update("none");
+
+  // Memory chart periodic update
+  var xmlhttp = new XMLHttpRequest();
+  setInterval(function() {
+    sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        var newData = eval("(" + xmlhttp.responseText + ")");
+        var labels = sizeChart.data.labels;
+        var x = new Date().getTime();
+        labels.push(x);
+        labels.shift();
+        var allocators = newData.allocator;
+        for (var i = 0; i < allocators.length; i++) {
+          var series = sizeChart.data.datasets[i].data;
+          var y = allocators[i].cs / 1024;
+          series.push(y);
+          series.shift();
+        }
+        sizeChart.update("none");
+      }
+    });
+  }, 1000);
+
   const carriersUtilizationCtx = document.getElementById("carriers-utilization");
 }
 
