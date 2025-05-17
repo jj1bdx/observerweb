@@ -41,6 +41,7 @@ function loadCharts(){
                     });
             }()),
         options: {
+            locale: 'en-GB',
             plugins: {
             title: {
                 display: true,
@@ -48,6 +49,9 @@ function loadCharts(){
             }
             },
             scales: {
+                x: {
+                    type: 'time'
+                },
                 y: {
                     beginAtZero: true,
                     min: 0,
