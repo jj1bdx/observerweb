@@ -17,7 +17,7 @@
     document.addEventListener('DOMContentLoaded', function () {
       getNodes();
       loadAppVsnInfo();
-      loadSchedulerInfo();
+      loadCharts();
       loadSysInfo();
       setTimeout(function () {
         loadCharts();
@@ -141,28 +141,28 @@
       <div class="tab-pane fade" id="load-charts" role="tabpanel" aria-labelledby="load-charts-tab">
         <div class="row">
           <div class="col-md-12">
-            <canvas id="scheduler-utilization" style="height:300px"></canvas>
+            <canvas id="scheduler-utilization" width="800" height="300"></canvas>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <canvas id="memory-usage" style="height:300px"></canvas>
+            <canvas id="memory-usage" height="300"></canvas>
           </div>
           <div class="col-md-6">
-            <canvas id="io-usage" style="height:300px"></canvas>
+            <canvas id="io-usage" height="300"></canvas>
           </div>
         </div>
       </div>
       <div class="tab-pane fade" id="memory-alloc" role="tabpanel" aria-labelledby="memory-alloc-tab">
         <div class="row">
           <div class="col-md-12">
-            <canvas id="carriers-size" style="height:300px"></canvas>
+            <canvas id="carriers-size" height="300"></canvas>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <canvas id="carriers-utilization" style="height:300px"></canvas>
+          <canvas id="carriers-utilization" height="300"></canvas>
         </div>
       </div>
       <div class="row">

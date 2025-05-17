@@ -3,19 +3,43 @@
 */
 
 function loadCharts(){
-    const schedulerUtilizationCtx = document.getElementById('scheduler-utilization');
     const memoryUsageCtx = document.getElementById('memory-usage');
     const ioUsageCtx = document.getElementById('io-usage');
+    var schedulerobj, ioobj;
 
-    const schedulerChart = new Chart(schedulerUtilizationCtx, {
+    const schedulerChart = new Chart(
+        document.getElementById('scheduler-utilization'),
+        {
         type: 'line',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'], // Labels for the chart
-            datasets: [{
-                label: 'Votes',
-                data: [12, 19, 3, 5, 2, 3]
-            }] 
-        },
+        data:  (function() {
+                const size = 60;
+                var labels = [],
+                    time = (new Date()).getTime(),
+                    j; 
+                for (j = -size; j <= 0; j += 1) {
+                    labels.push(time + j * 1000);
+                }
+                var responseText = sendSyncRequest("action=get_perf&type=scheduler");
+                schedulerobj = eval("(" + responseText + ")");
+                var seriesdata = [];
+                for (var i = 0; i < schedulerobj.scheduler.length; i++) {
+                    seriesdata.push({
+                        label: String(i + 1),
+                        data: (function() {
+                            var data = [],
+                                j;
+                            for (j = -size; j <= 0; j += 1) {
+                                data.push(0);
+                            }
+                            return data;
+                        }())
+                    });
+                }
+                return ({
+                    labels: labels,
+                    datasets: seriesdata
+                    });
+            }()),
         options: {
             plugins: {
             title: {
@@ -25,31 +49,36 @@ function loadCharts(){
             },
             scales: {
                 y: {
-                    beginAtZero: true // Start the y-axis at 0
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100
                 }
             }
         }
     });
-}
+    schedulerChart.update('none');
 
-function loadSchedulerInfo() {
-    var schedulerObj;
     var xmlhttp = new XMLHttpRequest();
     setInterval(function() {
       sendAsyncRequest(xmlhttp, "action=get_perf&type=scheduler", function() {
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
           var newData = eval("(" + xmlhttp.responseText + ")");
-          console.log(newData, newData.scheduler.length);
-          //  for (var i = 0; i < schedulerObj.scheduler.length; i++) {
-          //    var series = schedulerChart.series[i];
-          //    var x = (new Date()).getTime(),
-          //        activetime = newData.scheduler[i].activetime - schedulerObj.scheduler[i].activetime,
-          //        totaltime = newData.scheduler[i].totaltime - schedulerObj.scheduler[i].totaltime,
-          //        y = Math.floor((100 * activetime) / totaltime);
-          //    series.addPoint([x, y], true, true);
-          //    }
-          // schedulerObj = newData;
-           }
+          var labels = schedulerChart.data.labels;
+          var x = (new Date()).getTime();
+          labels.push(x);
+          labels.shift();
+          for (var i = 0; i < schedulerobj.scheduler.length; i++) {
+            var series = schedulerChart.data.datasets[i].data;
+            var x = (new Date()).getTime(),
+                activetime = newData.scheduler[i].activetime - schedulerobj.scheduler[i].activetime,
+                totaltime = newData.scheduler[i].totaltime - schedulerobj.scheduler[i].totaltime,
+                y = Math.floor((100 * activetime) / totaltime);
+            series.push(y);
+            series.shift();
+            }
+          schedulerobj = newData;
+          schedulerChart.update('none');
+        }
        });
      }, 1000);
 }
@@ -76,10 +105,6 @@ function loadSysInfos() {
 }
 
 function loadMAlocInfo() {
-    loadMAlocInfos();
-    setInterval(function(){
-        loadMAlocInfos();
-    }, 10*1000);
 
     const carriersSizeCtx = document.getElementById('carriers-size');
     const carriersUtilizationCtx = document.getElementById('carriers-utilization');
