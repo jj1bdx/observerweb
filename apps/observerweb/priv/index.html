@@ -134,95 +134,94 @@
       <div class="tab-pane fade" id="load-charts" role="tabpanel" aria-labelledby="load-charts-tab">
         <div class="row">
           <div class="col-md-12">
-            <canvas id="scheduler-utilization" width="800" height="300"></canvas>
+            <canvas id="scheduler-utilization"></canvas>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <canvas id="memory-usage" height="300"></canvas>
+            <canvas id="memory-usage"></canvas>
           </div>
           <div class="col-md-6">
-            <canvas id="io-usage" height="300"></canvas>
+            <canvas id="io-usage"></canvas>
           </div>
         </div>
       </div>
       <div class="tab-pane fade" id="memory-alloc" role="tabpanel" aria-labelledby="memory-alloc-tab">
         <div class="row">
           <div class="col-md-12">
-            <canvas id="carriers-size" height="300"></canvas>
+            <canvas id="carriers-size"></canvas>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <canvas id="carriers-utilization"></canvas>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-bordered" data-toggle="table" data-classes="table table-bordered"
+              data-cache="false" data-height="200">
+              <thead>
+                <tr>
+                  <th>Allocator Type</th>
+                  <th>Block size(KB)</th>
+                  <th>Carrier size(KB)</th>
+                </tr>
+              </thead>
+              <tbody id="alloctor-table">
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <canvas id="carriers-utilization" height="300"></canvas>
-        </div>
+      <div class="tab-pane fade" id="applications" role="tabpanel" aria-labelledby="applications-tab">
+        <p>Applications</p>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <table class="table table-bordered" data-toggle="table" data-classes="table table-bordered" data-cache="false"
-            data-height="200">
-            <thead>
-              <tr>
-                <th>Allocator Type</th>
-                <th>Block size(KB)</th>
-                <th>Carrier size(KB)</th>
-              </tr>
-            </thead>
-            <tbody id="alloctor-table">
-            </tbody>
-          </table>
-        </div>
+      <div class="tab-pane fade" id="processes" role="tabpanel" aria-labelledby="processes-tab">
+        <h3 class="panel-title">Processes</h3>
+        <table class="table table-bordered" data-toggle="table" data-classes="table table-bordered" data-cache="false"
+          data-height="600">
+          <thead>
+            <tr>
+              <th>Pid</th>
+              <th>Name or Initial Func</th>
+              <th>Reds</th>
+              <th>Memory</th>
+              <th>MsgQ</th>
+              <th>Current Function</th>
+            </tr>
+          </thead>
+          <tbody id="process-table">
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="table-viewer" role="tabpanel" aria-labelledby="table-viewer-tab">
+        <p>Table Viewer</p>
+      </div>
+      <div class="tab-pane fade" id="trace-overview" role="tabpanel" aria-labelledby="trace-overview-tab">
+        <p>Trace Overview</p>
+      </div>
+      <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+        <h3 class="panel-title">About</h3>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            ObserverWeb: An experimental system viewer for Erlang/OTP
+          </li>
+          <li class="list-group-item">
+            Application vsn: <span id="vsn"></span>
+          </li>
+          <li class="list-group-item">
+            <a href="https:/github.com/jj1bdx/observerweb">GitHub source code link</a>
+          </li>
+          <li class="list-group-item">
+            Program maintained by: Kenji Rikitake
+          </li>
+          <li class="list-group-item">
+            License: <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a>
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="tab-pane fade" id="applications" role="tabpanel" aria-labelledby="applications-tab">
-      <p>Applications</p>
-    </div>
-    <div class="tab-pane fade" id="processes" role="tabpanel" aria-labelledby="processes-tab">
-      <h3 class="panel-title">Processes</h3>
-      <table class="table table-bordered" data-toggle="table" data-classes="table table-bordered" data-cache="false"
-        data-height="600">
-        <thead>
-          <tr>
-            <th>Pid</th>
-            <th>Name or Initial Func</th>
-            <th>Reds</th>
-            <th>Memory</th>
-            <th>MsgQ</th>
-            <th>Current Function</th>
-          </tr>
-        </thead>
-        <tbody id="process-table">
-        </tbody>
-      </table>
-    </div>
-    <div class="tab-pane fade" id="table-viewer" role="tabpanel" aria-labelledby="table-viewer-tab">
-      <p>Table Viewer</p>
-    </div>
-    <div class="tab-pane fade" id="trace-overview" role="tabpanel" aria-labelledby="trace-overview-tab">
-      <p>Trace Overview</p>
-    </div>
-    <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
-      <h3 class="panel-title">About</h3>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          ObserverWeb: An experimental system viewer for Erlang/OTP
-        </li>
-        <li class="list-group-item">
-          Application vsn: <span id="vsn"></span>
-        </li>
-        <li class="list-group-item">
-          <a href="https:/github.com/jj1bdx/observerweb">GitHub source code link</a>
-        </li>
-        <li class="list-group-item">
-          Program maintained by: Kenji Rikitake
-        </li>
-        <li class="list-group-item">
-          License: <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a>
-        </li>
-      </ul>
-    </div>
-  </div>
   </div> <!-- /container -->
 
   <div class="modal fade" id="connect_node_modal" tabindex="-1" aria-labelledby="connect_node_modal_label"
