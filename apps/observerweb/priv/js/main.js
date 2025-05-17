@@ -371,28 +371,6 @@ function loadMAlocInfo() {
   });
   sizeChart.update("none");
 
-  // Memory chart periodic update
-  var xmlhttp = new XMLHttpRequest();
-  setInterval(function() {
-    sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
-      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        var newData = eval("(" + xmlhttp.responseText + ")");
-        var labels = sizeChart.data.labels;
-        var x = new Date().getTime();
-        labels.push(x);
-        labels.shift();
-        var allocators = newData.allocator;
-        for (var i = 0; i < allocators.length; i++) {
-          var series = sizeChart.data.datasets[i].data;
-          var y = allocators[i].cs / 1024;
-          series.push(y);
-          series.shift();
-        }
-        sizeChart.update("none");
-      }
-    });
-  }, 1000);
-
   // Carrier Utilization chart init
   const utiliChart = new Chart(document.getElementById("carriers-utilization"), {
     type: "line",
@@ -458,23 +436,29 @@ function loadMAlocInfo() {
   });
   utiliChart.update("none");
 
-  // Carrier Utilization chart periodic update
+  // Carrier Size/Utilization chart periodic update
   var xmlhttp = new XMLHttpRequest();
   setInterval(function() {
     sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         var newData = eval("(" + xmlhttp.responseText + ")");
-        var labels = utiliChart.data.labels;
+        var sizeLabels = sizeChart.data.labels;
+        var utiliLabels = utiliChart.data.labels;
         var x = new Date().getTime();
-        labels.push(x);
-        labels.shift();
+        sizeLabels.push(x);
+        sizeLabels.shift();
+        utiliLabels.push(x);
+        utiliLabels.shift();
         var allocators = newData.allocator;
         for (var i = 0; i < allocators.length; i++) {
-          var series = utiliChart.data.datasets[i].data;
-          var y = (allocators[i].bs / allocators[i].cs) * 100;
-          series.push(y);
-          series.shift();
+          var sizeSeries = sizeChart.data.datasets[i].data;
+          var utiliSeries = utiliChart.data.datasets[i].data;
+          sizeSeries.push(allocators[i].cs / 1024);
+          utiliSeries.push((allocators[i].bs / allocators[i].cs) * 100);
+          sizeSeries.shift();
+          utiliSeries.shift();
         }
+        sizeChart.update("none");
         utiliChart.update("none");
       }
     });
