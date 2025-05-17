@@ -501,21 +501,6 @@ function sendSyncRequest(qs) {
   return xmlhttp.responseText;
 }
 
-function getTitle(title, max) {
-  kb = Math.floor(max / 1024);
-  mb = Math.floor(kb / 1024);
-  gb = Math.floor(mb / 1024);
-  if (gb > 10) {
-    return title + "(GB)";
-  } else if (mb > 10) {
-    return title + "(MB)";
-  } else if (kb > 0) {
-    return title + "(KB)";
-  } else {
-    return title + "(B)";
-  }
-}
-
 function connectNode() {
   var connectModalEl = document.querySelector("#connect_node_modal");
   var connectModal = bootstrap.Modal.getInstance(connectModalEl);
