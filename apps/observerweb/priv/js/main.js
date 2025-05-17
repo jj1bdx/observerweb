@@ -56,6 +56,16 @@ function loadCharts() {
           min: 0,
           max: 100
         }
+      },
+      datasets: {
+        line: {
+          pointRadius: 0
+        }
+      },
+      elements: {
+        point: {
+          radius: 0
+        }
       }
     }
   });
@@ -134,6 +144,16 @@ function loadCharts() {
         y: {
           beginAtZero: true,
           min: 0
+        }
+      },
+      datasets: {
+        line: {
+          pointRadius: 0
+        }
+      },
+      elements: {
+        point: {
+          radius: 0
         }
       }
     }
@@ -216,6 +236,16 @@ function loadCharts() {
           beginAtZero: true,
           min: 0
         }
+      },
+      datasets: {
+        line: {
+          pointRadius: 0
+        }
+      },
+      elements: {
+        point: {
+          radius: 0
+        }
       }
     }
   });
@@ -273,10 +303,10 @@ function loadSysInfos() {
 function loadMAlocInfo() {
 
   loadMAlocInfos();
-  setInterval(function(){
-      loadMAlocInfos();
-  }, 10*1000);
-   
+  setInterval(function() {
+    loadMAlocInfos();
+  }, 10 * 1000);
+
   // Carrier Size chart init
   const sizeChart = new Chart(document.getElementById("carriers-size"), {
     type: "line",
@@ -325,6 +355,16 @@ function loadMAlocInfo() {
         y: {
           beginAtZero: true,
           min: 0
+        }
+      },
+      datasets: {
+        line: {
+          pointRadius: 0
+        }
+      },
+      elements: {
+        point: {
+          radius: 0
         }
       }
     }
@@ -403,12 +443,22 @@ function loadMAlocInfo() {
           min: 0,
           max: 100
         }
+      },
+      datasets: {
+        line: {
+          pointRadius: 0
+        }
+      },
+      elements: {
+        point: {
+          radius: 0
+        }
       }
     }
   });
   utiliChart.update("none");
 
-  // Memory chart periodic update
+  // Carrier Utilization chart periodic update
   var xmlhttp = new XMLHttpRequest();
   setInterval(function() {
     sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
