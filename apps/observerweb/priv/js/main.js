@@ -77,8 +77,8 @@ function loadCharts() {
   schedulerChart.update("none");
 
   // Scheduler chart periodic update
-  var xmlhttp = new XMLHttpRequest();
   setInterval(function() {
+    var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=get_perf&type=scheduler", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         var newData = eval("(" + xmlhttp.responseText + ")");
@@ -171,8 +171,8 @@ function loadCharts() {
   memoryChart.update("none");
 
   // Memory chart periodic update
-  var xmlhttp = new XMLHttpRequest();
   setInterval(function() {
+    var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=get_perf&type=memory", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         var newData = eval("(" + xmlhttp.responseText + ")");
@@ -266,8 +266,8 @@ function loadCharts() {
   ioChart.update("none");
 
   // I/O chart periodic update
-  var xmlhttp = new XMLHttpRequest();
   setInterval(function() {
+    var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=get_perf&type=io", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         var newData = eval("(" + xmlhttp.responseText + ")");
@@ -461,8 +461,8 @@ function loadMAlocInfo() {
   utiliChart.update("none");
 
   // Carrier Size/Utilization chart periodic update
-  var xmlhttp = new XMLHttpRequest();
   setInterval(function() {
+    var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         var newData = eval("(" + xmlhttp.responseText + ")");
@@ -643,3 +643,5 @@ function startUp() {
   loadProInfo();
   setChangeNode();
 }
+
+// End of main.js
