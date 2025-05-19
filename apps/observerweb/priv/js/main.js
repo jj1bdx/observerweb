@@ -54,7 +54,18 @@ function loadCharts() {
       },
       scales: {
         x: {
-          type: "time"
+          type: "time",
+          adapters: {
+            date: {
+              zone: "UTC"
+            }
+          },
+          time: {
+            unit: "second",
+            displayFormats: {
+              second: "mm:ss"
+            }
+          }
         },
         y: {
           beginAtZero: true,
@@ -149,7 +160,18 @@ function loadCharts() {
       },
       scales: {
         x: {
-          type: "time"
+          type: "time",
+          adapters: {
+            date: {
+              zone: "UTC"
+            }
+          },
+          time: {
+            unit: "second",
+            displayFormats: {
+              second: "mm:ss"
+            }
+          }
         },
         y: {
           beginAtZero: true,
@@ -244,7 +266,18 @@ function loadCharts() {
       },
       scales: {
         x: {
-          type: "time"
+          type: "time",
+          adapters: {
+            date: {
+              zone: "UTC"
+            }
+          },
+          time: {
+            unit: "second",
+            displayFormats: {
+              second: "mm:ss"
+            }
+          }
         },
         y: {
           beginAtZero: true,
@@ -369,7 +402,18 @@ function loadMAlocInfo() {
       },
       scales: {
         x: {
-          type: "time"
+          type: "time",
+          adapters: {
+            date: {
+              zone: "UTC"
+            }
+          },
+          time: {
+            unit: "second",
+            displayFormats: {
+              second: "mm:ss"
+            }
+          }
         },
         y: {
           beginAtZero: true,
@@ -438,7 +482,18 @@ function loadMAlocInfo() {
       },
       scales: {
         x: {
-          type: "time"
+          type: "time",
+          adapters: {
+            date: {
+              zone: "UTC"
+            }
+          },
+          time: {
+            unit: "second",
+            displayFormats: {
+              second: "mm:ss"
+            }
+          }
         },
         y: {
           beginAtZero: true,
