@@ -39,7 +39,6 @@ function loadCharts() {
     }(),
     options: {
       animation: false,
-      locale: "en-GB",
       plugins: {
         title: {
           align: "start",
@@ -68,6 +67,12 @@ function loadCharts() {
           }
         },
         y: {
+          ticks: {
+            // Use non-locale simple format for numbers
+            callback: function(value, index, ticks) {
+              return String(value);
+            }
+          },
           beginAtZero: true,
           min: 0,
           max: 100
@@ -174,6 +179,12 @@ function loadCharts() {
           }
         },
         y: {
+          ticks: {
+            // Use non-locale simple format for numbers
+            callback: function(value, index, ticks) {
+              return String(value);
+            }
+          },
           beginAtZero: true,
           min: 0
         }
@@ -280,6 +291,12 @@ function loadCharts() {
           }
         },
         y: {
+          ticks: {
+            // Use non-locale simple format for numbers
+            callback: function(value, index, ticks) {
+              return String(value);
+            }
+          },
           beginAtZero: true,
           min: 0
         }
@@ -416,6 +433,12 @@ function loadMAlocInfo() {
           }
         },
         y: {
+          ticks: {
+            // Use non-locale simple format for numbers
+            callback: function(value, index, ticks) {
+              return String(value);
+            }
+          },
           beginAtZero: true,
           min: 0
         }
@@ -496,6 +519,12 @@ function loadMAlocInfo() {
           }
         },
         y: {
+          ticks: {
+            // Use non-locale simple format for numbers
+            callback: function(value, index, ticks) {
+              return String(value);
+            }
+          },
           beginAtZero: true,
           min: 0,
           max: 100
