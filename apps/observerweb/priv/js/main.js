@@ -150,7 +150,6 @@ function loadCharts() {
     }(),
     options: {
       animation: false,
-      locale: "en-GB",
       plugins: {
         title: {
           align: "start",
@@ -262,7 +261,6 @@ function loadCharts() {
     }(),
     options: {
       animation: false,
-      locale: "en-GB",
       plugins: {
         title: {
           align: "start",
@@ -404,7 +402,6 @@ function loadMAlocInfo() {
     }(),
     options: {
       animation: false,
-      locale: "en-GB",
       plugins: {
         title: {
           align: "start",
@@ -490,7 +487,6 @@ function loadMAlocInfo() {
     }(),
     options: {
       animation: false,
-      locale: "en-GB",
       plugins: {
         title: {
           align: "start",
