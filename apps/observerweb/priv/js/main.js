@@ -17,7 +17,7 @@ function loadCharts() {
         labels.push(time + j * 1000);
       }
       var responseText = sendSyncRequest("action=get_perf&type=scheduler");
-      schedulerobj = eval("(" + responseText + ")");
+      schedulerobj = JSON.parse(responseText);
       var seriesdata = [];
       for (var i = 0; i < schedulerobj.scheduler.length; i++) {
         seriesdata.push({
@@ -97,7 +97,7 @@ function loadCharts() {
     var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=get_perf&type=scheduler", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        var newData = eval("(" + xmlhttp.responseText + ")");
+        var newData = JSON.parse(xmlhttp.responseText);
         var labels = schedulerChart.data.labels;
         var x = new Date().getTime();
         labels.push(x);
@@ -207,7 +207,7 @@ function loadCharts() {
     var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=get_perf&type=memory", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        var newData = eval("(" + xmlhttp.responseText + ")");
+        var newData = JSON.parse(xmlhttp.responseText);
         var labels = memoryChart.data.labels;
         var x = new Date().getTime();
         labels.push(x);
@@ -239,7 +239,7 @@ function loadCharts() {
       }
       var seriesdata = [];
       var responseText = sendSyncRequest("action=get_perf&type=io");
-      ioobj = eval("(" + responseText + ")");
+      ioobj = JSON.parse(responseText);
       var names = ["Input", "Output"];
       for (var i = 0; i < names.length; i++) {
         seriesdata.push({
@@ -318,7 +318,7 @@ function loadCharts() {
     var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=get_perf&type=io", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        var newData = eval("(" + xmlhttp.responseText + ")");
+        var newData = JSON.parse(xmlhttp.responseText);
         var labels = ioChart.data.labels;
         var x = new Date().getTime();
         labels.push(x);
@@ -352,7 +352,7 @@ function loadSysInfos() {
   var xmlhttp = new XMLHttpRequest();
   sendAsyncRequest(xmlhttp, "action=get_sys", function() {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      var jsonData = eval("(" + xmlhttp.responseText + ")");
+      var jsonData = JSON.parse(xmlhttp.responseText);
       var datas = [jsonData.system, jsonData.memory, jsonData.cpu, jsonData.statistics];
       var ids = ["#system-architecture", "#memory-info", "#cpu-threads", "#statistics"];
       for (var i = 0; i < datas.length; i++) {
@@ -545,7 +545,7 @@ function loadMAlocInfo() {
     var xmlhttp = new XMLHttpRequest();
     sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        var newData = eval("(" + xmlhttp.responseText + ")");
+        var newData = JSON.parse(xmlhttp.responseText);
         var sizeLabels = sizeChart.data.labels;
         var utiliLabels = utiliChart.data.labels;
         var x = new Date().getTime();
@@ -573,7 +573,7 @@ function loadMAlocInfos() {
   var xmlhttp = new XMLHttpRequest();
   sendAsyncRequest(xmlhttp, "action=get_malloc", function() {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      var jsonData = eval("(" + xmlhttp.responseText + ")");
+      var jsonData = JSON.parse(xmlhttp.responseText);
       displayInfo("#alloctor-table", jsonData.allocator);
     }
   });
@@ -633,7 +633,7 @@ function getNodes() {
   var xmlhttp = new XMLHttpRequest();
   sendAsyncRequest(xmlhttp, "action=get_nodes", function() {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      var jsonData = eval("(" + xmlhttp.responseText + ")");
+      var jsonData = JSON.parse(xmlhttp.responseText);
       var nodes = jsonData.nodes;
       var txt = "";
       for (var i = 0; i < nodes.length; i++) {
@@ -667,7 +667,7 @@ function loadProInfos() {
   var xmlhttp = new XMLHttpRequest();
   sendAsyncRequest(xmlhttp, "action=get_pro&type=all", function() {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      var jsonData = eval("(" + xmlhttp.responseText + ")");
+      var jsonData = JSON.parse(xmlhttp.responseText);
       var txt = "";
       for (var i = jsonData.length - 1; i >= 0; i--) {
         txt = txt + "<tr><td>" + jsonData[i].pid + "</td><td>" + jsonData[i].name + '</td><td class="text-right">' + jsonData[i].reds + '</td><td class="text-right">' + jsonData[i].mem + '</td><td class="text-right">' + jsonData[i].msg + "</td><td>" + jsonData[i].fun + "</td></tr>";
@@ -681,7 +681,7 @@ function loadAppVsnInfo() {
   var xmlhttp = new XMLHttpRequest();
   sendAsyncRequest(xmlhttp, "action=get_app_vsn", function() {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      var jsonData = eval("(" + xmlhttp.responseText + ")");
+      var jsonData = JSON.parse(xmlhttp.responseText);
       document.querySelector("#vsn").textContent = jsonData.app_vsn;
     }
   });
